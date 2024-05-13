@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mysql-container:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+
+  nodejs-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql-container
+    networks:
+      - my-network
+
+networks:
+  my-network:
