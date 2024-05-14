@@ -1,14 +1,28 @@
 version: '3'
 services:
   mysql-container:
-    image: mysql:latest
+    image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_AUTH_PLUGIN: mysql_native_password
+
     ports:
       - "3306:3306"
     networks:
       - my-network
+      
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql-container
+      MYSQL_ROOT_PASSWORD: password
+
 
   nodejs-container:
     build:
