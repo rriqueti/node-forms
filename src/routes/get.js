@@ -1,9 +1,9 @@
-// const forms = require('../controllers/forms');
+// const forms = require('../public/forms/');
 
 const routes = require('express').Router();
 
 routes.get('/forms', (req, res)=>{
-    res.render('../public/forms/index')
+    res.sendFile(__dirname + '/index.html')
 });
 
 module.exports = routes;
