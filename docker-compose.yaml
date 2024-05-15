@@ -21,8 +21,6 @@ services:
       - 8080:80
     environment:
       PMA_HOST: mysql-container
-      MYSQL_ROOT_PASSWORD: password
-
 
   nodejs-container:
     build:
