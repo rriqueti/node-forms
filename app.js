@@ -1,35 +1,58 @@
-// const express = require('express');
-// const mysql = require('mysql2');
-const app = require('./src/config/config-express');
+const bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(bodyParser.urlencoded({extended: true}))
 
-// Create a MySQL connection
-// const db = mysql.createConnection({
-//   host: 'mysql-container', 
-//   user: 'user',
-//   password: 'password',
-// });
+app.get('/forms', (req, res)=>{
+  res.sendFile(__dirname+'/index.html')
+})
 
-// // Connect to MySQL
-// db.connect((err) => {
-//   if (err) {
-//     console.error('Error connecting to MySQL:', err);
-//     return;
-//   }
-//   console.log('Connected to MySQL');
-// });
+app.post('/submit/{produto}', (req, res)=>{
+  const produto = req.body;
+  const prod = red.produto;
+  
+  res.send(`
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Produto Cadastrado</title>
+      <style>
+          body {
+              font-family: 'Roboto', sans-serif;
+              background-color: #f8f9fa;
+              margin: 0;
+              padding: 20px;
+          }
+  
+          .container {
+              max-width: 600px;
+              margin: auto;
+              background-color: #ffffff;
+              padding: 20px;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              text-align: center;
+          }
+  
+          .mdc-button {
+              margin-top: 20px;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <h2>Produto Cadastrado</h2>
+          <p>O produto foi cadastrado com sucesso!</p>
+      </div>
 
-
-// app.get('/', (req, res) => {
-//   db.query('SELECT * FROM formularios', (err, results) => {
-//     if (err) {
-//       console.error('Error executing query:', err);
-//       return;
-//     }
-//     res.json({ message: 'Welcome to the Node.js API!', data: results });
-//   });
-// });
+  </body>
+  </html>
+  
+  
+  `);
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
